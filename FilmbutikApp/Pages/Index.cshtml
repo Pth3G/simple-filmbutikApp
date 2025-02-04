@@ -1,0 +1,61 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Hyra film";
+}
+
+<h2 class="text-center">Hyra film</h2>
+
+<form method="post" novalidate>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+
+        <label>Namn på kund:</label>
+        <input type="text" asp-for="Name" id="customerName" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+
+        <label>Är kunden en klubbmedlem?</label>
+        <select asp-for="IsMember">
+            <option value="true">Ja</option>
+            <option value="false">Nej</option>
+        </select>
+
+        <label>Antal DVD-filmer:</label>
+        <input type="number" asp-for="DvdUnit" min="0" max="100" onblur="resetNumber(this)" />
+        <span asp-validation-for="DvdUnit" class="text-danger"></span>
+
+        <label>Antal Blu-Ray-filmer:</label>
+        <input type="number" asp-for="BluRayUnit" min="0" max="100" onblur="resetNumber(this)" />
+        <span asp-validation-for="BluRayUnit" class="text-danger"></span>
+
+        <div style="margin-top: 20px; display: flex; gap: 10px;">
+            <button type="submit" asp-page-handler="Calculate">Beräkna</button>
+            <button type="submit" asp-page-handler="Register">Registrera</button>
+        </div>
+    </div>
+</form>
+
+@if (Model.TotalPrice.HasValue)
+{
+    <h3 style="margin-top: 40px;" id="totalCost">Totalkostnad för uthyrning: <strong>@Model.TotalPrice kr</strong></h3>
+}
+
+<p style="margin-top: 20px"><a asp-page="/RegisteredCustomers">Visa alla registrerade kunder</a></p>
+
+@section Scripts {
+    <script>
+        function resetNumber(input) {
+           let value = input.value;
+
+            // Ta bort alla icke numeriska värden
+            value = value.replace(/[^0-9]/g, '');
+
+            // säkerställ att det är en siffra eller inte mindre än 0
+            value = parseInt(value, 10);
+            if (isNaN(value) || value < 0) {
+                value = 0;
+            }
+
+            input.value = value;
+        }
+    </script>
+}

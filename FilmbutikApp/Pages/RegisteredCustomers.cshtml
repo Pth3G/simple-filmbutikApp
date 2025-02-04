@@ -1,0 +1,44 @@
+﻿@page
+@using FilmbutikApp.Pages.Models
+@using FilmbutikApp.Pages.Models.Types
+@model RegisteredCustomersModel
+@{
+    ViewData["Title"] = "Registrerade Kunder";
+}
+
+<h2 class="text-center">Registrerade Kunder</h2>
+
+@if (Model.RegisteredCustomers?.Any() == true)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Namn</th>
+                <th>Medlem</th>
+                <th>DVD</th>
+                <th>Blu-ray</th>
+                <th>Totalt Antal Filmer</th>
+                <th>Totalkostnad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model.RegisteredCustomers)
+            {
+                <tr>
+                    <td>@customer.Name</td>
+                    <td>@(customer.IsMember ? "Ja" : "Nej")</td>
+                    <td>@customer.RentedMovies.Count(mt => mt.Type == MovieType.DVD)</td>
+                    <td>@customer.RentedMovies.Count(mt => mt.Type == MovieType.BluRay)</td>
+                    <td>@customer.RentedMovies.Count()</td>
+                    <td>@Model.CalculateTotalPrice(customer) kr</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Inga registrerade kunder ännu.</p>
+}
+
+<p><a asp-page="/Index">Tillbaka</a></p>
