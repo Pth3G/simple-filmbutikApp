@@ -2,6 +2,7 @@ using FilmbutikApp.Pages.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace FilmbutikApp.Pages
 {
@@ -40,9 +41,9 @@ namespace FilmbutikApp.Pages
         {
             ModelState.Clear();
 
-            if (string.IsNullOrWhiteSpace(Name))
+            if (string.IsNullOrWhiteSpace(Name) || !Regex.IsMatch(Name, @"^[a-zA-ZåäöÅÄÖ\s]+$"))
             {
-                ModelState.AddModelError(nameof(Name), "Namn på kund får inte vara tomt eller innehålla endast mellanslag.");
+                ModelState.AddModelError(nameof(Name), "Namn på kund får endast innehålla bokstäver och mellanslag.");
             }
 
             if (DvdUnit < 0 || DvdUnit > 100)

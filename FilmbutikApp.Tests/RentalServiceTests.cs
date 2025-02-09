@@ -15,6 +15,9 @@ public class RentalServiceTests
     }
 
     [Theory]
+    [InlineData(3, 0, 78.3)]
+    [InlineData(0, 3, 99.45)]
+    [InlineData(2, 1, 85.35)]
     [InlineData(4, 0, 100)]
     [InlineData(0, 4, 100)]
     [InlineData(2, 3, 133.15)]
@@ -40,6 +43,9 @@ public class RentalServiceTests
     }
 
     [Theory]
+    [InlineData(3, 0, 87)]
+    [InlineData(0, 3, 117)]
+    [InlineData(2, 1, 97)]
     [InlineData(4, 0, 116)]
     [InlineData(0, 4, 156)]
     [InlineData(2, 3, 175)]

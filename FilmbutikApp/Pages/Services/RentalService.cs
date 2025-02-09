@@ -19,12 +19,18 @@ namespace FilmbutikApp.Pages.Services
 
             var sortedMovies = customer.RentedMovies.OrderBy(m => m.Price).ToList();
 
-            decimal firstFourMovies = sortedMovies.Take(4).Sum(m => m.Price);
-            decimal firstFourFinalPrice = Math.Min(100, firstFourMovies);
+            if (sortedMovies.Count > 3)
+            {
+                decimal firstFourMovies = sortedMovies.Take(4).Sum(m => m.Price);
+                decimal firstFourFinalPrice = Math.Min(100, firstFourMovies);
+                decimal extraDiscountedMovies = sortedMovies.Skip(4).Sum(m => CalculateDiscountedPrice(m));
 
-            decimal discountedExtraMovies = sortedMovies.Skip(4).Sum(m => CalculateDiscountedPrice(m));
+                return firstFourFinalPrice + extraDiscountedMovies;
+            }
 
-            return firstFourFinalPrice + discountedExtraMovies;
+            decimal discountedExtraMoviesWithoutExtraPrice = sortedMovies.Sum(m => CalculateDiscountedPrice(m));
+
+            return discountedExtraMoviesWithoutExtraPrice;
         }
 
         private decimal CalculateDiscountedPrice(Movie movie)
