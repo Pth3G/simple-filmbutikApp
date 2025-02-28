@@ -1,7 +1,6 @@
 ﻿# 🎬 FilmbutikApp - Tillfällig filmuthyrningssystem
 
 En enkel **ASP.NET Core Razor Pages applikation** för att hyra filmer (DVDs & Blu-ray) med specialkostnader för klubbmedlemmar.
-Uppgiften är från Gotit AB - år 2025.
 
 ## 🚀 Introduktion
 
